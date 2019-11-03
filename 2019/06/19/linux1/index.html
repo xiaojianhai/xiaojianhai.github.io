@@ -1,0 +1,123 @@
+<!DOCTYPE html><html lang="zh-cn"><head><meta name="generator" content="Hexo 3.9.0"><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta name="description" content="linux1"><meta name="keywords" content="Linux_命令行"><meta name="author" content="Xu conglei"><meta name="copyright" content="Xu conglei"><title>linux1 | Xuconglei</title><link rel="shortcut icon" href="/melody-favicon.ico"><link rel="stylesheet" href="/css/index.css?version=1.6.1"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@latest/css/font-awesome.min.css?version=1.6.1"><link rel="dns-prefetch" href="https://cdn.staticfile.org"><link rel="dns-prefetch" href="https://cdn.bootcss.com"><link rel="dns-prefetch" href="https://creativecommons.org"><script><!-- hexo-inject:begin --><!-- hexo-inject:end -->var GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  copy: {
+    success: 'Copy successfully',
+    error: 'Copy error',
+    noSupport: 'The browser does not support'
+  }
+} </script><!-- hexo-inject:begin --><!-- hexo-inject:end --></head><body><i class="fa fa-arrow-right" id="toggle-sidebar" aria-hidden="true"></i><div id="sidebar"><div class="toggle-sidebar-info text-center"><span data-toggle="Toggle article">Toggle site</span><hr></div><div class="sidebar-toc"><div class="sidebar-toc__title">Catalog</div><div class="sidebar-toc__progress"><span class="progress-notice">You've read</span><span class="progress-num">0</span><span class="progress-percentage">%</span><div class="sidebar-toc__progress-bar"></div></div><div class="sidebar-toc__content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#tar命令"><span class="toc-number">1.</span> <span class="toc-text">tar命令</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#命令格式"><span class="toc-number">1.1.</span> <span class="toc-text">命令格式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#命令功能"><span class="toc-number">1.2.</span> <span class="toc-text">命令功能</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#必要参数"><span class="toc-number">1.3.</span> <span class="toc-text">必要参数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#可选参数"><span class="toc-number">1.4.</span> <span class="toc-text">可选参数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#实例"><span class="toc-number">1.5.</span> <span class="toc-text">实例</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#chgrp-chown-chmod"><span class="toc-number">2.</span> <span class="toc-text">chgrp,chown,chmod</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#chgrp"><span class="toc-number">2.1.</span> <span class="toc-text">chgrp</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#chown"><span class="toc-number">2.2.</span> <span class="toc-text">chown</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#chmod"><span class="toc-number">2.3.</span> <span class="toc-text">chmod</span></a></li></ol></li></ol></div></div><div class="author-info hide"><div class="author-info__avatar text-center"><img src="https://raw.githubusercontent.com/xiaojianhai/blog_images/master/bolg_index/new.jpg"></div><div class="author-info__name text-center">Xu conglei</div><div class="author-info__description text-center"></div><div class="follow-button"><a href="https://github.com/xiaojianhai">Follow me</a></div><hr><div class="author-info-articles"><a class="author-info-articles__archives article-meta" href="/archives"><span class="pull-left">Articles</span><span class="pull-right">11</span></a><a class="author-info-articles__tags article-meta" href="/tags"><span class="pull-left">Tags</span><span class="pull-right">9</span></a><a class="author-info-articles__categories article-meta" href="/categories"><span class="pull-left">Categories</span><span class="pull-right">9</span></a></div></div></div><div id="content-outer"><div id="top-container" style="background-image: url(https://raw.githubusercontent.com/xiaojianhai/blog_images/master/bolg_index/1.jpg)"><div id="page-header"><span class="pull-left"> <a id="site-name" href="/">Xuconglei</a></span><i class="fa fa-bars toggle-menu pull-right" aria-hidden="true"></i><span class="pull-right menus"><a class="site-page" href="/">Home</a><a class="site-page" href="/archives">Archives</a><a class="site-page" href="/tags">Tags</a><a class="site-page" href="/categories">Categories</a></span></div><div id="post-info"><div id="post-title">linux1</div><div id="post-meta"><time class="post-meta__date"><i class="fa fa-calendar" aria-hidden="true"></i> 2019-06-19</time><span class="post-meta__separator">|</span><i class="fa fa-inbox post-meta__icon" aria-hidden="true"></i><a class="post-meta__categories" href="/categories/Linux/">Linux</a></div></div></div><div class="layout" id="content-inner"><article id="post"><div class="article-container" id="post-content"><h1 id="tar命令"><a href="#tar命令" class="headerlink" title="tar命令"></a>tar命令</h1><p>用来解压，打包文件的命令，不能进行压缩操作</p>
+<!-- hexo-inject:begin --><!-- hexo-inject:end --><h2 id="命令格式"><a href="#命令格式" class="headerlink" title="命令格式"></a>命令格式</h2><p>tar[必要参数][选择参数][文件]</p>
+<h2 id="命令功能"><a href="#命令功能" class="headerlink" title="命令功能"></a>命令功能</h2><p>用来压缩和解压文件，tar本身不具有压缩功能，通过调用压缩功能实现。</p>
+<h2 id="必要参数"><a href="#必要参数" class="headerlink" title="必要参数"></a>必要参数</h2><p>-A 新增压缩文件到已存在压缩</p>
+<p>-B 设置区块大小</p>
+<p>-c 建立新的压缩文件</p>
+<p>-x 从压缩文件中提取文件</p>
+<p>-t 显示压缩文件的内容</p>
+<p>-z 支持gzip解压文件</p>
+<p>-j 支持bzip2解压文件</p>
+<p>-v 显示操作过程</p>
+<p>-k 保留原有文件不覆盖</p>
+<p>-W 确认压缩文件正确性</p>
+<h2 id="可选参数"><a href="#可选参数" class="headerlink" title="可选参数"></a>可选参数</h2><p>-b 设置区块数目</p>
+<p>-C 切换到指定目录</p>
+<p>-f 指定压缩文件</p>
+<h2 id="实例"><a href="#实例" class="headerlink" title="实例"></a>实例</h2><p>解压到特定目录</p>
+<p>tar -xzvf .gzip -C target_</p>
+<p>将/etc目录下的文件全部打包成为/tmp/etc.tar</p>
+<p>tar -cvf /tmp/etc.tar /etc</p>
+<p>tar -zcvf /tm[/etc.tar.gz /etc</p>
+<p>备份所有文件并且保存权限</p>
+<p>tar -zcvpf /tmp/etc.tar.gz /etc</p>
+<h1 id="chgrp-chown-chmod"><a href="#chgrp-chown-chmod" class="headerlink" title="chgrp,chown,chmod"></a>chgrp,chown,chmod</h1><h2 id="chgrp"><a href="#chgrp" class="headerlink" title="chgrp"></a>chgrp</h2><p>用来变更文件和目录的群组</p>
+<p>chgrp [选项] [组] [文件或目录]</p>
+<p>命令参数</p>
+<p>-c 当发生改变是输出调试信息</p>
+<p>-f 不显示错误信息</p>
+<p>-R 递归处理</p>
+<p>-v 运行时显示详细的处理信息</p>
+<p>chgrp -R bin test6</p>
+<p>将test6及其子目录下所有文件和目录群组改为bin</p>
+<h2 id="chown"><a href="#chown" class="headerlink" title="chown"></a>chown</h2><p>将指定文件的拥有者改为指定的用户或组，用户可以使用户名或者ID</p>
+<p>chown [选项] [所有者：组] 文件</p>
+<p>命令参数：</p>
+<p>-c 显示更改的部分的信息</p>
+<p>-f force忽略错误的信息</p>
+<p>-h </p>
+<p>-R 递归处理</p>
+<p>-v 显示处理信息</p>
+<p>双短线：</p>
+<p>–help 显示帮助信息</p>
+<p>–version 显示版本信息</p>
+<p>实例：</p>
+<p>将log123的拥有者改为mail,群组改为mail</p>
+<p>chown mail:mail log123</p>
+<h2 id="chmod"><a href="#chmod" class="headerlink" title="chmod"></a>chmod</h2><p>改变文件或目录的权限，当用ls -l 显示文件的详细信息，最左边一列为文件的访问权限</p>
+<p>形式如下:-rw-r-r-共10位</p>
+<p>第一位指定了文件类型，-为文件，d为目录</p>
+<p>2-4, 拥有者的权限</p>
+<p>5-7, 组的权限</p>
+<p>8-10，为其他的权限</p>
+<p>命令格式：</p>
+<p>chomd [选项] mode file</p>
+<p>命令参数：</p>
+<p>-f 错误信息不输出</p>
+<p>-R 递归处理</p>
+<p>-v 显示详细消息</p>
+<p>对象：</p>
+<p>u；文件的拥有者</p>
+<p>g：文件的群组</p>
+<p>o: 其他用户群组</p>
+<p>a: 所有的用户和群组</p>
+<p>权限：<br>r读：4<br>w写：2<br>x执行：1</p>
+<p>实例：</p>
+<p>将所有用户增加可执行权限</p>
+<p>chmod -f a+x log2013</p>
+<p>增加用户执行权限，增加组和其他的写和执行权限</p>
+<p>chmod u+x,go+wx log2013 </p>
+<p>设置为所有用户读写</p>
+<p>chmod 777 log 2013== chmode a+rwx log2012</p>
+</div></article><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/Linux-命令行/">Linux_命令行</a></div><nav id="pagination"><div class="prev-post pull-left"><a href="/2019/07/10/machine-learning-theory/"><i class="fa fa-chevron-left">  </i><span>machine_learning_theory</span></a></div><div class="next-post pull-right"><a href="/2019/06/04/array/"><span>array</span><i class="fa fa-chevron-right"></i></a></div></nav></div></div><footer class="footer-bg" style="background-image: url(https://raw.githubusercontent.com/xiaojianhai/blog_images/master/bolg_index/1.jpg)"><div class="layout" id="footer"><div class="copyright">&copy;2018 - 2019 By Xu conglei</div><div class="framework-info"><span>Driven - </span><a href="http://hexo.io"><span>Hexo</span></a><span class="footer-separator">|</span><span>Theme - </span><a href="https://github.com/Molunerfinn/hexo-theme-melody"><span>Melody</span></a></div><div class="footer_custom_text">Hi, welcome to my <a href="https://xiaojianhai.github.io/">blog</a>!</div></div></footer><i class="fa fa-arrow-up" id="go-up" aria-hidden="true"></i><script src="https://cdn.jsdelivr.net/npm/animejs@latest/anime.min.js"></script><script src="https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-animate@latest/velocity.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-ui-pack@latest/velocity.ui.min.js"></script><script src="/js/utils.js?version=1.6.1"></script><script src="/js/fancybox.js?version=1.6.1"></script><script src="/js/sidebar.js?version=1.6.1"></script><script src="/js/copy.js?version=1.6.1"></script><script src="/js/fireworks.js?version=1.6.1"></script><script src="/js/transition.js?version=1.6.1"></script><script src="/js/scroll.js?version=1.6.1"></script><script src="/js/head.js?version=1.6.1"></script><script type="text/x-mathjax-config">MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+    processEscapes: true,
+    skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+  },
+  CommonHTML: {
+    linebreaks: { automatic: true, width: "90% container" }
+  },
+  "HTML-CSS": { 
+    linebreaks: { automatic: true, width: "90% container" }
+  },
+  "SVG": { 
+    linebreaks: { automatic: true, width: "90% container" }
+  }
+});
+</script><script type="text/x-mathjax-config">MathJax.Hub.Queue(function() {
+  var all = MathJax.Hub.getAllJax(), i;
+  for (i=0; i < all.length; i += 1) {
+    all[i].SourceElement().parentNode.className += ' has-jax';
+  }
+});
+</script><script src="https://cdn.jsdelivr.net/npm/mathjax/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.css"><script src="https://cdn.jsdelivr.net/npm/katex-copytex@latest/dist/katex-copytex.min.js"></script><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/katex-copytex@latest/dist/katex-copytex.min.css"><script>if(/Android|webOS|iPhone|iPod|BlackBerry/i.test(navigator.userAgent)) {
+  $('#nav').addClass('is-mobile')
+  $('footer').addClass('is-mobile')
+}</script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config("");
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="custom_mathjax_source">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end --></body></html>

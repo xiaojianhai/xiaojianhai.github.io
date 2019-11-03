@@ -1,0 +1,58 @@
+<!DOCTYPE html><html lang="zh-cn"><head><meta name="generator" content="Hexo 3.9.0"><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta name="description" content="机器学习常犯的统计错误"><meta name="keywords" content="theory"><meta name="author" content="Xu conglei"><meta name="copyright" content="Xu conglei"><title>机器学习常犯的统计错误 | Xuconglei</title><link rel="shortcut icon" href="/melody-favicon.ico"><link rel="stylesheet" href="/css/index.css?version=1.6.1"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@latest/css/font-awesome.min.css?version=1.6.1"><link rel="dns-prefetch" href="https://cdn.staticfile.org"><link rel="dns-prefetch" href="https://cdn.bootcss.com"><link rel="dns-prefetch" href="https://creativecommons.org"><script><!-- hexo-inject:begin --><!-- hexo-inject:end -->var GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  copy: {
+    success: 'Copy successfully',
+    error: 'Copy error',
+    noSupport: 'The browser does not support'
+  }
+} </script><!-- hexo-inject:begin --><!-- hexo-inject:end --></head><body><i class="fa fa-arrow-right" id="toggle-sidebar" aria-hidden="true"></i><div id="sidebar"><div class="toggle-sidebar-info text-center"><span data-toggle="Toggle article">Toggle site</span><hr></div><div class="sidebar-toc"><div class="sidebar-toc__title">Catalog</div><div class="sidebar-toc__progress"><span class="progress-notice">You've read</span><span class="progress-num">0</span><span class="progress-percentage">%</span><div class="sidebar-toc__progress-bar"></div></div><div class="sidebar-toc__content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Dimensionality-constant-维度常量-and-the-Curse-of-Dimensionality-维度噩梦）"><span class="toc-number">1.</span> <span class="toc-text">Dimensionality constant(维度常量) and the Curse of Dimensionality(维度噩梦）</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Normality-of-data-数据的正态性）"><span class="toc-number">2.</span> <span class="toc-text">Normality of data(数据的正态性）</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Ignoring-sampling-error"><span class="toc-number">3.</span> <span class="toc-text">Ignoring sampling error</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Choosing-the-wrong-Loss-functions"><span class="toc-number">4.</span> <span class="toc-text">Choosing the wrong Loss functions</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Correlation-vs-Causation"><span class="toc-number">5.</span> <span class="toc-text">Correlation vs Causation</span></a></li></ol></div></div><div class="author-info hide"><div class="author-info__avatar text-center"><img src="https://raw.githubusercontent.com/xiaojianhai/blog_images/master/bolg_index/new.jpg"></div><div class="author-info__name text-center">Xu conglei</div><div class="author-info__description text-center"></div><div class="follow-button"><a href="https://github.com/xiaojianhai">Follow me</a></div><hr><div class="author-info-articles"><a class="author-info-articles__archives article-meta" href="/archives"><span class="pull-left">Articles</span><span class="pull-right">11</span></a><a class="author-info-articles__tags article-meta" href="/tags"><span class="pull-left">Tags</span><span class="pull-right">9</span></a><a class="author-info-articles__categories article-meta" href="/categories"><span class="pull-left">Categories</span><span class="pull-right">9</span></a></div></div></div><div id="content-outer"><div id="top-container" style="background-image: url(https://raw.githubusercontent.com/xiaojianhai/blog_images/master/bolg_index/1.jpg)"><div id="page-header"><span class="pull-left"> <a id="site-name" href="/">Xuconglei</a></span><i class="fa fa-bars toggle-menu pull-right" aria-hidden="true"></i><span class="pull-right menus"><a class="site-page" href="/">Home</a><a class="site-page" href="/archives">Archives</a><a class="site-page" href="/tags">Tags</a><a class="site-page" href="/categories">Categories</a></span></div><div id="post-info"><div id="post-title">机器学习常犯的统计错误</div><div id="post-meta"><time class="post-meta__date"><i class="fa fa-calendar" aria-hidden="true"></i> 2019-09-24</time><span class="post-meta__separator">|</span><i class="fa fa-inbox post-meta__icon" aria-hidden="true"></i><a class="post-meta__categories" href="/categories/statistics/">statistics</a></div></div></div><div class="layout" id="content-inner"><article id="post"><div class="article-container" id="post-content"><script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=default"></script>
+<!-- hexo-inject:begin --><!-- hexo-inject:end --><p><a href="https://www.quora.com/What-are-some-common-errors-in-machine-learning-caused-by-poor-knowledge-of-statistics" target="_blank" rel="noopener">原文链接</a><br>  当我们进行机器学习、深度学习的实验的时候，常常只注重于算法的设计，而忽略了统计学的相关知识，比如不注意<br> <strong>dimensionality constant</strong> 和数据的<strong>probability distribution</strong>从而导致许多问题，下面的内容，我会来介绍这<br> 两项内容。</p>
+<h1 id="Dimensionality-constant-维度常量-and-the-Curse-of-Dimensionality-维度噩梦）"><a href="#Dimensionality-constant-维度常量-and-the-Curse-of-Dimensionality-维度噩梦）" class="headerlink" title="Dimensionality constant(维度常量) and the Curse of Dimensionality(维度噩梦）"></a>Dimensionality constant(维度常量) and the Curse of Dimensionality(维度噩梦）</h1><p>  维度常量是用来衡量统计模型对应样本的数量是否足够，下面我们用一个例子来详细阐述维度常量，假设现在样本的特征空间是100维，<br>样本的个数是500维，样本的矩阵大小是100*500，维度常量=维度/样本矩阵的大小=100/500=1/5，它代表在100维的特征空间中，<br>每一个基础的特征都包含500个样本的数据，维度常量的值将会很大程度上影响模型的效果，我们通常使得维度常量的值尽量接<br>近0（特征空间和样本数目都很大，但是样本数目更大）如果维度常量的值过大，则表明相对于特征空间的维度来说样本的数目<br>太少也就是每个特征的样本数量太少，这种情况我们采用PCA，linerar regression,将会得到不准确的结果。</p>
+<p>  在学习过程中，样本的个数将会随之特征空间的增大，呈现指数增长<strong>Curse of Dimensionality</strong>如下图所示：<br><img src="https://raw.githubusercontent.com/xiaojianhai/blog_images/master/pictures/statistics/1.png" alt="avatar"></p>
+<p>  在平常的模型中，通常会将维度常量设置成非常接近0的数，但是现实世界中也存在一些特列，比如当我们需要训练金融领域的模型<br>时，如果我们将维度常量设置成很大，模型将会学习到一些错误的相关性和信息，因为金融数据更多的是依赖于现在的数据对于过去的<br>数据依赖很少，这时我们需要一个大的维度常量，减小一些时间较长的样本数据的影响。</p>
+<h1 id="Normality-of-data-数据的正态性）"><a href="#Normality-of-data-数据的正态性）" class="headerlink" title="Normality of data(数据的正态性）"></a>Normality of data(数据的正态性）</h1><p>  我们大多数的算法模型，例如线性回归，深度学习模型，都需要输入数据的符合正态分布，所以在进行模型训练的时候，我们首先需要<br>知道模型的数据分布，实际生活中，由于缺乏统计学的知识，我们会将所有数据分布类似锥形的分布都当作是正态分布。<br><img src="https://raw.githubusercontent.com/xiaojianhai/blog_images/master/pictures/statistics/2.jpg" alt="avatar"><br>第一张图片显示了从供水系统管道中水下测量的噪声样本，当我们第一眼看到这数据的时候，很容易的就认为这是正态分布，再来看第二张图<br>，它是噪声样本和具有相同均值，方差的正态分布；图三是将下x,y从线性映射成log 级别后的图片，我们可以很清楚的看出噪声样本于正态<br>分布的形状差很多，这其实是一个‘heavy-tailed data distribution’,当我们在判断数据分布的时候，不仅要从均值方差去判断，有时候还需要<br>对数据分布进行恒等变化来确定数据的分布。</p>
+<h1 id="Ignoring-sampling-error"><a href="#Ignoring-sampling-error" class="headerlink" title="Ignoring sampling error"></a><a href="http://www.cs.cmu.edu/~tom/10601_sp08/slides/evaluation-2-13.pdf" target="_blank" rel="noopener">Ignoring sampling error</a></h1><h1 id="Choosing-the-wrong-Loss-functions"><a href="#Choosing-the-wrong-Loss-functions" class="headerlink" title="Choosing the wrong Loss functions"></a><a href="https://heartbeat.fritz.ai/5-regression-loss-functions-all-machine-learners-should-know-4fb140e9d4b0" target="_blank" rel="noopener">Choosing the wrong Loss functions</a></h1><h1 id="Correlation-vs-Causation"><a href="#Correlation-vs-Causation" class="headerlink" title="Correlation vs Causation"></a><a href="https://towardsdatascience.com/correlation-is-not-causation-ae05d03c1f53" target="_blank" rel="noopener">Correlation vs Causation</a></h1></div></article><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/theory/">theory</a></div><nav id="pagination"><div class="next-post pull-right"><a href="/2019/09/20/bert/"><span>bert</span><i class="fa fa-chevron-right"></i></a></div></nav></div></div><footer class="footer-bg" style="background-image: url(https://raw.githubusercontent.com/xiaojianhai/blog_images/master/bolg_index/1.jpg)"><div class="layout" id="footer"><div class="copyright">&copy;2018 - 2019 By Xu conglei</div><div class="framework-info"><span>Driven - </span><a href="http://hexo.io"><span>Hexo</span></a><span class="footer-separator">|</span><span>Theme - </span><a href="https://github.com/Molunerfinn/hexo-theme-melody"><span>Melody</span></a></div><div class="footer_custom_text">Hi, welcome to my <a href="https://xiaojianhai.github.io/">blog</a>!</div></div></footer><i class="fa fa-arrow-up" id="go-up" aria-hidden="true"></i><script src="https://cdn.jsdelivr.net/npm/animejs@latest/anime.min.js"></script><script src="https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-animate@latest/velocity.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-ui-pack@latest/velocity.ui.min.js"></script><script src="/js/utils.js?version=1.6.1"></script><script src="/js/fancybox.js?version=1.6.1"></script><script src="/js/sidebar.js?version=1.6.1"></script><script src="/js/copy.js?version=1.6.1"></script><script src="/js/fireworks.js?version=1.6.1"></script><script src="/js/transition.js?version=1.6.1"></script><script src="/js/scroll.js?version=1.6.1"></script><script src="/js/head.js?version=1.6.1"></script><script type="text/x-mathjax-config">MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+    processEscapes: true,
+    skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+  },
+  CommonHTML: {
+    linebreaks: { automatic: true, width: "90% container" }
+  },
+  "HTML-CSS": { 
+    linebreaks: { automatic: true, width: "90% container" }
+  },
+  "SVG": { 
+    linebreaks: { automatic: true, width: "90% container" }
+  }
+});
+</script><script type="text/x-mathjax-config">MathJax.Hub.Queue(function() {
+  var all = MathJax.Hub.getAllJax(), i;
+  for (i=0; i < all.length; i += 1) {
+    all[i].SourceElement().parentNode.className += ' has-jax';
+  }
+});
+</script><script src="https://cdn.jsdelivr.net/npm/mathjax/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.css"><script src="https://cdn.jsdelivr.net/npm/katex-copytex@latest/dist/katex-copytex.min.js"></script><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/katex-copytex@latest/dist/katex-copytex.min.css"><script>if(/Android|webOS|iPhone|iPod|BlackBerry/i.test(navigator.userAgent)) {
+  $('#nav').addClass('is-mobile')
+  $('footer').addClass('is-mobile')
+}</script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config("");
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="custom_mathjax_source">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end --></body></html>

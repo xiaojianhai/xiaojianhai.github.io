@@ -1,0 +1,76 @@
+<!DOCTYPE html><html lang="zh-cn"><head><meta name="generator" content="Hexo 3.9.0"><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta name="description" content="transformer"><meta name="keywords" content="paper"><meta name="author" content="Xu conglei"><meta name="copyright" content="Xu conglei"><title>transformer | Xuconglei</title><link rel="shortcut icon" href="/melody-favicon.ico"><link rel="stylesheet" href="/css/index.css?version=1.6.1"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@latest/css/font-awesome.min.css?version=1.6.1"><link rel="dns-prefetch" href="https://cdn.staticfile.org"><link rel="dns-prefetch" href="https://cdn.bootcss.com"><link rel="dns-prefetch" href="https://creativecommons.org"><script><!-- hexo-inject:begin --><!-- hexo-inject:end -->var GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  copy: {
+    success: 'Copy successfully',
+    error: 'Copy error',
+    noSupport: 'The browser does not support'
+  }
+} </script><!-- hexo-inject:begin --><!-- hexo-inject:end --></head><body><i class="fa fa-arrow-right" id="toggle-sidebar" aria-hidden="true"></i><div id="sidebar"><div class="toggle-sidebar-info text-center"><span data-toggle="Toggle article">Toggle site</span><hr></div><div class="sidebar-toc"><div class="sidebar-toc__title">Catalog</div><div class="sidebar-toc__progress"><span class="progress-notice">You've read</span><span class="progress-num">0</span><span class="progress-percentage">%</span><div class="sidebar-toc__progress-bar"></div></div><div class="sidebar-toc__content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Attention-is-all-you-need-详解"><span class="toc-number">1.</span> <span class="toc-text">Attention is all you need 详解</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#论文提出原因"><span class="toc-number">1.1.</span> <span class="toc-text">论文提出原因</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Transformer网络结构"><span class="toc-number">1.2.</span> <span class="toc-text">Transformer网络结构</span></a></li></ol></li></ol></div></div><div class="author-info hide"><div class="author-info__avatar text-center"><img src="https://raw.githubusercontent.com/xiaojianhai/blog_images/master/bolg_index/new.jpg"></div><div class="author-info__name text-center">Xu conglei</div><div class="author-info__description text-center"></div><div class="follow-button"><a href="https://github.com/xiaojianhai">Follow me</a></div><hr><div class="author-info-articles"><a class="author-info-articles__archives article-meta" href="/archives"><span class="pull-left">Articles</span><span class="pull-right">11</span></a><a class="author-info-articles__tags article-meta" href="/tags"><span class="pull-left">Tags</span><span class="pull-right">9</span></a><a class="author-info-articles__categories article-meta" href="/categories"><span class="pull-left">Categories</span><span class="pull-right">9</span></a></div></div></div><div id="content-outer"><div id="top-container" style="background-image: url(https://raw.githubusercontent.com/xiaojianhai/blog_images/master/bolg_index/1.jpg)"><div id="page-header"><span class="pull-left"> <a id="site-name" href="/">Xuconglei</a></span><i class="fa fa-bars toggle-menu pull-right" aria-hidden="true"></i><span class="pull-right menus"><a class="site-page" href="/">Home</a><a class="site-page" href="/archives">Archives</a><a class="site-page" href="/tags">Tags</a><a class="site-page" href="/categories">Categories</a></span></div><div id="post-info"><div id="post-title">transformer</div><div id="post-meta"><time class="post-meta__date"><i class="fa fa-calendar" aria-hidden="true"></i> 2019-08-03</time><span class="post-meta__separator">|</span><i class="fa fa-inbox post-meta__icon" aria-hidden="true"></i><a class="post-meta__categories" href="/categories/paper/">paper</a></div></div></div><div class="layout" id="content-inner"><article id="post"><div class="article-container" id="post-content"><script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=default"></script>
+<!-- hexo-inject:begin --><!-- hexo-inject:end --><h1 id="Attention-is-all-you-need-详解"><a href="#Attention-is-all-you-need-详解" class="headerlink" title="Attention is all you need 详解"></a>Attention is all you need 详解</h1><h2 id="论文提出原因"><a href="#论文提出原因" class="headerlink" title="论文提出原因"></a>论文提出原因</h2><p>1：RNN系列特征提取器</p>
+<p>RNN特征提取器基于语言模型</p>
+<span>$$$p(t_1,t_2,t_3,....,t_n)=\prod_{k=1}^N{p(t_k|t_1,t_2,t_3,.....t_k-1)} $$$</span><!-- Has MathJax -->
+<p>t1,t2,t3,….tn 为一个句子的单词序列，以这种方式提取特征，并行性比较差，因为第k个单词必须在前k-1个单词<br>处理之后才能处理，即使有很多的RNN变体来解决其并行性的问题但是并不能大幅度改变这种并行性，此外这种方式只利用了上文的信息，即使如ELMO里面的操作一样，采取双向进行拼接，但是这种上下文特征进行融合的模式，并不是很理想。</p>
+<p>2：CNN系列特征提取器</p>
+<p>CNN系列特征提取器，因为没有RNN的这种序列关系的影响，特征提取器速度很快，但是随着句子长度的上升，时间复杂度成指数上涨，对于长句子的依赖提取效果非常差。</p>
+<p>因为上述两种特征提取器本省不足，论文提出了基于没有序列操作和卷积操作的Transformer特征提取器，Transformer特征提取器纯基于各个单词注意力机制，他的核心思想就是每一个单词的表示是由其上下文中出现的单词来表示。</p>
+<h2 id="Transformer网络结构"><a href="#Transformer网络结构" class="headerlink" title="Transformer网络结构"></a>Transformer网络结构</h2><p>1: 整体结构</p>
+<p>  整体由6个相同的encoder和6个相同的decoder堆叠而成，其中每一个encoder又与其对应的decoder连接，整体结构如图：<br><img src="https://raw.githubusercontent.com/xiaojianhai/blog_images/master/pictures/transformer/transformer_1.png" alt="avatar"></p>
+<p>2: Encoder</p>
+<p>  其中每个Encoder由Multi-head Attention 然后layernorm（数据分布标准化）+残差网络（处理深层网络的一种方式），然后接一个全连接网络，<br>最后对结果进行分布标准化，残差网络，将结果分别传给上层的decoder和对应的Encoder,Encoder 结构如图：<br><img src="https://raw.githubusercontent.com/xiaojianhai/blog_images/master/pictures/transformer/transformer_2.png" alt="avatar"></p>
+<p>3: Multi-Head Attention and Scaled Dot-product Attention</p>
+<p>  Multi-Head Attention and Scaled Dot-product Attention 如图所示：<br>  <img src="https://raw.githubusercontent.com/xiaojianhai/blog_images/master/pictures/transformer/tranformer_3.png" alt="avatar"><br>  Scaled Dot-product Attention 流程：首先将输入单词进行简单的Embedding 然后嵌入位置，对句子中的每个单词d_word分别乘以三个<br>  矩阵Wq,Wk,Wv,得到三个向量query,key,value,其中Dquery=Dkey,然后利用下面的单词自注意力机制来求每个单词与其上下文之间的联系。<br>  <span>$$$ softmax(\frac{W_{query}^{T}W_{key}}{\sqrt[2]{D_{model}}})*W_{values}$$$</span><!-- Has MathJax --><br>  W_query 为句子中单词的query矩阵，将所具有前后序列性操作的RNN系列替换为各个单词矩阵之间的相乘，给并行性带来了巨大的提高，<br>  同时利用矩阵乘法的优化代码，<br>  同时加快了算法的执行效率。<br>  Multi-Head Attention 公式如下所示：<br>  <span>$$$$ Multi-Head(Q,K,V)=concat(head_1,head_2,head_3,.....,head_h)W^O $$
+$$ where head_i=Attention(QW_i^Q,KW_i^K,VW_i^V) $$$$</span><!-- Has MathJax --><br>    Q,K,V 在输入到注意力机制前需要做一个线性变换，所有参数中的所有Q,K,V矩阵分别乘以不同的矩阵。</p>
+<p>##网络细节<br>1： 编码位置的方法</p>
+<p>  我们的目标是，将最后产生的，word Embedding 是一个与位置具有线性关系的向量，<br>  <span>$$$$ PE(pos,2_i)=\sin(pos/10000^{2_i/d_model})
+  PE(pos,2_i+1)=\cos(pos/10000^{2_i/d_model})
+$$$$</span><!-- Has MathJax --><br>  通过此公式，每个词向量的各个维度的值与pos的值连接起来，并且PEpos+k能被PEpos通过线性表示出来</p>
+<p>2： multi——head策略</p>
+<p>  将每个单词映射到几个不同的子空间，在几个不同的子空间中提取特征，同时，模型的复杂度并没有提高，因为<br>  <span>$$$ D_{query}=\frac{D_{model}}{NUM_HEADERS}  $$$</span><!-- Has MathJax --><br>3：残差网络</p>
+<p>  论文中Transformer中每层Decoderd都采用了残差连接，避免了网络堆叠带来的梯度消失等问题</p>
+<p>##总结<br>  注意力机制策略的核心思想与语言模型类型，每个词的表示都是通过其周围的上下文中的单词来表示，这种直接注意力的方法，让<br>每个单词去直接的与单词进行交互，把位置信息嵌入到embedding中效率很高，同时可以很有效率的利用上文和下文。但是从主观来讲<br>这种嵌入位置信息的方法可能效果不太好，同时因为单词之间采用的是注意力机制，对于句子的处理情况效果也不是很理想。<br>下图是几种，特征提取方式的效率对比图。</p>
+<p><img src="https://raw.githubusercontent.com/xiaojianhai/blog_images/master/pictures/transformer/transformer_4.png" alt="avatar"></p>
+</div></article><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/paper/">paper</a></div><nav id="pagination"><div class="prev-post pull-left"><a href="/2019/09/11/logest_palindromic_substring/"><i class="fa fa-chevron-left">  </i><span>Substring</span></a></div><div class="next-post pull-right"><a href="/2019/08/01/substring/"><span>substring</span><i class="fa fa-chevron-right"></i></a></div></nav></div></div><footer class="footer-bg" style="background-image: url(https://raw.githubusercontent.com/xiaojianhai/blog_images/master/bolg_index/1.jpg)"><div class="layout" id="footer"><div class="copyright">&copy;2018 - 2019 By Xu conglei</div><div class="framework-info"><span>Driven - </span><a href="http://hexo.io"><span>Hexo</span></a><span class="footer-separator">|</span><span>Theme - </span><a href="https://github.com/Molunerfinn/hexo-theme-melody"><span>Melody</span></a></div><div class="footer_custom_text">Hi, welcome to my <a href="https://xiaojianhai.github.io/">blog</a>!</div></div></footer><i class="fa fa-arrow-up" id="go-up" aria-hidden="true"></i><script src="https://cdn.jsdelivr.net/npm/animejs@latest/anime.min.js"></script><script src="https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-animate@latest/velocity.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-ui-pack@latest/velocity.ui.min.js"></script><script src="/js/utils.js?version=1.6.1"></script><script src="/js/fancybox.js?version=1.6.1"></script><script src="/js/sidebar.js?version=1.6.1"></script><script src="/js/copy.js?version=1.6.1"></script><script src="/js/fireworks.js?version=1.6.1"></script><script src="/js/transition.js?version=1.6.1"></script><script src="/js/scroll.js?version=1.6.1"></script><script src="/js/head.js?version=1.6.1"></script><script type="text/x-mathjax-config">MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+    processEscapes: true,
+    skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+  },
+  CommonHTML: {
+    linebreaks: { automatic: true, width: "90% container" }
+  },
+  "HTML-CSS": { 
+    linebreaks: { automatic: true, width: "90% container" }
+  },
+  "SVG": { 
+    linebreaks: { automatic: true, width: "90% container" }
+  }
+});
+</script><script type="text/x-mathjax-config">MathJax.Hub.Queue(function() {
+  var all = MathJax.Hub.getAllJax(), i;
+  for (i=0; i < all.length; i += 1) {
+    all[i].SourceElement().parentNode.className += ' has-jax';
+  }
+});
+</script><script src="https://cdn.jsdelivr.net/npm/mathjax/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.css"><script src="https://cdn.jsdelivr.net/npm/katex-copytex@latest/dist/katex-copytex.min.js"></script><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/katex-copytex@latest/dist/katex-copytex.min.css"><script>if(/Android|webOS|iPhone|iPod|BlackBerry/i.test(navigator.userAgent)) {
+  $('#nav').addClass('is-mobile')
+  $('footer').addClass('is-mobile')
+}</script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config("");
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="custom_mathjax_source">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end --></body></html>

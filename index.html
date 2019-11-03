@@ -1,0 +1,285 @@
+<!DOCTYPE html><html lang="zh-cn"><head><meta name="generator" content="Hexo 3.9.0"><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta name="description" content><meta name="keywords" content><meta name="author" content="Xu conglei"><meta name="copyright" content="Xu conglei"><title>hello word or world ? | Xuconglei</title><link rel="shortcut icon" href="/melody-favicon.ico"><link rel="stylesheet" href="/css/index.css?version=1.6.1"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@latest/css/font-awesome.min.css?version=1.6.1"><link rel="dns-prefetch" href="https://cdn.staticfile.org"><link rel="dns-prefetch" href="https://cdn.bootcss.com"><link rel="dns-prefetch" href="https://creativecommons.org"><script><!-- hexo-inject:begin --><!-- hexo-inject:end -->var GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  copy: {
+    success: 'Copy successfully',
+    error: 'Copy error',
+    noSupport: 'The browser does not support'
+  }
+} </script><!-- hexo-inject:begin --><!-- hexo-inject:end --></head><body><i class="fa fa-arrow-right" id="toggle-sidebar" aria-hidden="true"></i><div id="sidebar"><div class="author-info"><div class="author-info__avatar text-center"><img src="https://raw.githubusercontent.com/xiaojianhai/blog_images/master/bolg_index/new.jpg"></div><div class="author-info__name text-center">Xu conglei</div><div class="author-info__description text-center"></div><div class="follow-button"><a href="https://github.com/xiaojianhai">Follow me</a></div><hr><div class="author-info-articles"><a class="author-info-articles__archives article-meta" href="/archives"><span class="pull-left">Articles</span><span class="pull-right">11</span></a><a class="author-info-articles__tags article-meta" href="/tags"><span class="pull-left">Tags</span><span class="pull-right">9</span></a><a class="author-info-articles__categories article-meta" href="/categories"><span class="pull-left">Categories</span><span class="pull-right">9</span></a></div></div></div><nav id="nav" style="background-image: url(https://raw.githubusercontent.com/xiaojianhai/blog_images/master/bolg_index/1.jpg)"><div id="page-header"><span class="pull-left"> <a id="site-name" href="/">Xuconglei</a></span><i class="fa fa-bars toggle-menu pull-right" aria-hidden="true"></i><span class="pull-right menus"><a class="site-page" href="/">Home</a><a class="site-page" href="/archives">Archives</a><a class="site-page" href="/tags">Tags</a><a class="site-page" href="/categories">Categories</a></span></div><div id="site-info"><div id="site-title">Xuconglei</div><div id="site-sub-title">hello word or world ?</div></div></nav><div id="content-outer"><div class="layout" id="content-inner"><div class="recent-post-item article-container"><a class="article-title" href="/2019/09/24/basic-statistics-knowledge/">机器学习常犯的统计错误</a><time class="post-meta__date"><i class="fa fa-calendar" aria-hidden="true"></i> 2019-09-24</time><span class="article-meta"><span class="article-meta__separator">|</span><i class="fa fa-inbox article-meta__icon" aria-hidden="true"></i><a class="article-meta__categories" href="/categories/statistics/">statistics</a></span><span class="article-meta tags"><span class="article-meta__separator">|</span><i class="fa fa-tag article-meta__icon" aria-hidden="true"></i><a class="article-meta__tags" href="/tags/theory/">theory</a></span><div class="content"><script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=default"></script>
+<!-- hexo-inject:begin --><!-- hexo-inject:end --><p><a href="https://www.quora.com/What-are-some-common-errors-in-machine-learning-caused-by-poor-knowledge-of-statistics" target="_blank" rel="noopener">原文链接</a><br>  当我们进行机器学习、深度学习的实验的时候，常常只注重于算法的设计，而忽略了统计学的相关知识，比如不注意<br> <strong>dimensionality constant</strong> 和数据的<strong>probability distribution</strong>从而导致许多问题，下面的内容，我会来介绍这<br> 两项内容。</p>
+<h1 id="Dimensionality-constant-维度常量-and-the-Curse-of-Dimensionality-维度噩梦）"><a href="#Dimensionality-constant-维度常量-and-the-Curse-of-Dimensionality-维度噩梦）" class="headerlink" title="Dimensionality constant(维度常量) and the Curse of Dimensionality(维度噩梦）"></a>Dimensionality constant(维度常量) and the Curse of Dimensionality(维度噩梦）</h1><p>  维度常量是用来衡量统计模型对应样本的数量是否足够，下面我们用一个例子来详细阐述维度常量，假设现在样本的特征空间是100维，<br>样本的个数是500维，样本的矩阵大小是100*500，维度常量=维度/样本矩阵的大小=100/500=1/5，它代表在100维的特征空间中，<br>每一个基础的特征都包含500个样本的数据，维度常量的值将会很大程度上影响模型的效果，我们通常使得维度常量的值尽量接<br>近0（特征空间和样本数目都很大，但是样本数目更大）如果维度常量的值过大，则表明相对于特征空间的维度来说样本的数目<br>太少也就是每个特征的样本数量太少，这种情况我们采用PCA，linerar regression,将会得到不准确的结果。</p>
+<p>  在学习过程中，样本的个数将会随之特征空间的增大，呈现指数增长<strong>Curse of Dimensionality</strong>如下图所示：<br><img src="https://raw.githubusercontent.com/xiaojianhai/blog_images/master/pictures/statistics/1.png" alt="avatar"></p>
+<p>  在平常的模型中，通常会将维度常量设置成非常接近0的数，但是现实世界中也存在一些特列，比如当我们需要训练金融领域的模型<br>时，如果我们将维度常量设置成很大，模型将会学习到一些错误的相关性和信息，因为金融数据更多的是依赖于现在的数据对于过去的<br>数据依赖很少，这时我们需要一个大的维度常量，减小一些时间较长的样本数据的影响。</p>
+<h1 id="Normality-of-data-数据的正态性）"><a href="#Normality-of-data-数据的正态性）" class="headerlink" title="Normality of data(数据的正态性）"></a>Normality of data(数据的正态性）</h1><p>  我们大多数的算法模型，例如线性回归，深度学习模型，都需要输入数据的符合正态分布，所以在进行模型训练的时候，我们首先需要<br>知道模型的数据分布，实际生活中，由于缺乏统计学的知识，我们会将所有数据分布类似锥形的分布都当作是正态分布。<br><img src="https://raw.githubusercontent.com/xiaojianhai/blog_images/master/pictures/statistics/2.jpg" alt="avatar"><br>第一张图片显示了从供水系统管道中水下测量的噪声样本，当我们第一眼看到这数据的时候，很容易的就认为这是正态分布，再来看第二张图<br>，它是噪声样本和具有相同均值，方差的正态分布；图三是将下x,y从线性映射成log 级别后的图片，我们可以很清楚的看出噪声样本于正态<br>分布的形状差很多，这其实是一个‘heavy-tailed data distribution’,当我们在判断数据分布的时候，不仅要从均值方差去判断，有时候还需要<br>对数据分布进行恒等变化来确定数据的分布。</p>
+<h1 id="Ignoring-sampling-error"><a href="#Ignoring-sampling-error" class="headerlink" title="Ignoring sampling error"></a><a href="http://www.cs.cmu.edu/~tom/10601_sp08/slides/evaluation-2-13.pdf" target="_blank" rel="noopener">Ignoring sampling error</a></h1><h1 id="Choosing-the-wrong-Loss-functions"><a href="#Choosing-the-wrong-Loss-functions" class="headerlink" title="Choosing the wrong Loss functions"></a><a href="https://heartbeat.fritz.ai/5-regression-loss-functions-all-machine-learners-should-know-4fb140e9d4b0" target="_blank" rel="noopener">Choosing the wrong Loss functions</a></h1><h1 id="Correlation-vs-Causation"><a href="#Correlation-vs-Causation" class="headerlink" title="Correlation vs Causation"></a><a href="https://towardsdatascience.com/correlation-is-not-causation-ae05d03c1f53" target="_blank" rel="noopener">Correlation vs Causation</a></h1></div><hr></div><div class="recent-post-item article-container"><a class="article-title" href="/2019/09/20/bert/">bert</a><time class="post-meta__date"><i class="fa fa-calendar" aria-hidden="true"></i> 2019-09-20</time><span class="article-meta"><span class="article-meta__separator">|</span><i class="fa fa-inbox article-meta__icon" aria-hidden="true"></i><a class="article-meta__categories" href="/categories/paper/">paper</a></span><span class="article-meta tags"><span class="article-meta__separator">|</span><i class="fa fa-tag article-meta__icon" aria-hidden="true"></i><a class="article-meta__tags" href="/tags/paper/">paper</a></span><div class="content"><script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=default"></script>
+<p>  这篇博客，我会深入的分析，BERT模型之所以带来效果提升的原因。</p>
+<p>  在下面的介绍开始以前，我先把一些相关的论文以及结构放在下面，下面的博客内容将会引用下面的论文中的内容。</p>
+<ol>
+<li><p>“Transformer” 特征提取器，这是BERT的基础结构，也是BERT效果提升的根本原因，介绍Transformer的论文:<a href="https://arxiv.org/pdf/1706.03762.pdf" target="_blank" rel="noopener">Attention is all you need</a></p>
+</li>
+<li><p>”OpenAI GPT” 第一次用 “Transformer” 特征提取器在大规模的预训练数据上建立语言模型，然后应用到下游的任务，介绍GPT的论文：<a href="https://s3-us-west-2.amazonaws.com/openai-assets/research-covers/language-unsupervised/language_understanding_paper.pdf" target="_blank" rel="noopener">OpenAI’s work</a>。</p>
+</li>
+<li><p>”BERT“ 在”OpenAI GPT” 基础上进行了几处改动，介绍BERT的论文：<a href="https://arxiv.org/pdf/1810.04805.pdf" target="_blank" rel="noopener">Google‘s work</a>.</p>
+</li>
+</ol>
+<h1 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h1><p>什么是BERT?</p>
+<p>  <strong>BERT</strong>（Bidirectional Encoder Representation from Transformer),它是由一些列<strong>Transformer</strong>堆叠在一起构成（只包含Transformer的Decoder),其中双向一词<br>是<strong>BERT</strong>与<strong>GPT</strong>的主要区别，因为<strong>BERT</strong>的<strong>self-attention</strong>在两个方向同时进行而不像<strong>GPT</strong>的主要区别，因为<strong>BERT</strong>的主要区别，因为<strong>BERT</strong>的<strong>self-attention</strong><br>在两个方向同时进行而不像<strong>GPT</strong>的主要区别，因为<strong>BERT</strong>的<strong>self-attention</strong>在两个方向同时进行而不像<strong>GTP**</strong>self-attention<strong>在两个方向同时进行而不像</strong>GTP**<br>具体的来说，对于input sentence:” i love to work nlp”，在<strong>GPT</strong>中 “love” 这个单词只与它的前一个单词”i“ 和它自己本身之间存在<strong>self-attention</strong>的关系，<br>而在<strong>BERT</strong>中单词”i“ 将与句子中的所有单词进行self-attention操作。下面将会进一步介绍GPT不能双向的原因。</p>
+<h1 id="结构和双向性"><a href="#结构和双向性" class="headerlink" title="结构和双向性"></a>结构和双向性</h1><p>  <strong>OpenAI GPT</strong> 在建立语言模型的任务基础上来学习参数建立预训练模型，不断提高网络在已知句子的前半部分的前提下预测下一个单词，如果我们在这里利用双向结构<br>建立语言模型，因为self-attention 机制的原因，在预测下一个单词前，这个单词已经和当前单词进行了self-attention操作，已经具有下一个单词的信息<br>从而预测的准确率会很快提高到100%，我们还是拿上面的”i love to  work nlp” 为例子，假如当前单词是“love” 我们首先利用一个双向的self-attention操作。下面将会进一步介绍GPT不能双向的原因。<br>将”i“，”love”,”to”,”work”,”nlp”，这个5个单词的信息嵌入到已知句子中，我们用求得的已知句子去预测下一个单词，因为“to”已经嵌入到上文中，信息已经泄露<br>准确率会很快到100%。</p>
+<p>BERT 双向性的实现。</p>
+<p>  通过上面对<strong>OpenAI</strong>的分析，我们可以得出一个结论；对于Transformer特征提取器加上双向来建立语言模型不可行，BERT在这里用了一个非常巧妙的手法，为模型加入双向性，<br>它改变了建立语言模型的方式，采取对句子进行随机MASK的”masked language model” 任务和预测下一句子类型的 “next sentence prediction” 的任务两个任务  </p>
+<h2 id="Task1-Masked-language-model"><a href="#Task1-Masked-language-model" class="headerlink" title="Task1 Masked language model"></a>Task1 Masked language model</h2><p>BERT 会对输入的所有单词中的15%进行MASK操作，但是MASK操作并不相同，以”My Dog is hariy” 为例子。</p>
+<blockquote>
+<p>80% 将会被[mask]代替</p>
+</blockquote>
+<p>example： “My Dog is [mask]”</p>
+<blockquote>
+<p>10% 将会被随机单词代替</p>
+</blockquote>
+<p>example： “My Dog is rand”</p>
+<blockquote>
+<p>10% 将会保持不变</p>
+</blockquote>
+<p>example:  “My Dog is hariy”</p>
+<p>为什么不只用[mask]字符这一种方式替代单词？</p>
+<p>  因为如果在fine-tuning过程中，如果被[mask] 的单词没有出现，模型将不会知道在[mask]处存在单词的内容，将认为此处不需要任何输出，将会对模型的效果带来影响。<br>同时我们保留一部分不变的同时，能够让模型学习到mask单词的真正表示。random [mask] 的作用，用来比较模型[mask]的表现能力，使它表现能力比random的表现能力<br>优越。</p>
+<p>几点缺点：</p>
+<ol>
+<li>因为每次都只选取15%的单词进行预测，而语言模型对所有的单词都进行预测，这样会要得到语言模型的loss需要更多次的迭代</li>
+</ol>
+<h2 id="Task2-Next-Sentence-Prediction"><a href="#Task2-Next-Sentence-Prediction" class="headerlink" title="Task2 Next Sentence Prediction"></a>Task2 Next Sentence Prediction</h2><p>该任务主要内容是，将两个句子输入到模型，然后去预测第二个句子与第一个句子是否同属与一个文本。</p>
+<p>为什么需要第二个句子预测任务？</p>
+<p> 对于一些句子生成类任务来说，想自动问答，自然语言推理等任务，句子之间的关系对模型有很大的的作用。选取50%的实际的相邻句子，<br> 50% 的随机抽取句子进行训练。</p>
+</div><hr></div><div class="recent-post-item article-container"><a class="article-title" href="/2019/09/11/logest_palindromic_substring/">Substring</a><time class="post-meta__date"><i class="fa fa-calendar" aria-hidden="true"></i> 2019-09-11</time><span class="article-meta"><span class="article-meta__separator">|</span><i class="fa fa-inbox article-meta__icon" aria-hidden="true"></i><a class="article-meta__categories" href="/categories/leetcode/">leetcode</a></span><span class="article-meta tags"><span class="article-meta__separator">|</span><i class="fa fa-tag article-meta__icon" aria-hidden="true"></i><a class="article-meta__tags" href="/tags/dynamic-programing/">dynamic programing</a></span><div class="content"><h1 id="5-Longest-Palindromic-Substring"><a href="#5-Longest-Palindromic-Substring" class="headerlink" title="5. Longest Palindromic Substring"></a>5. Longest Palindromic Substring</h1><h2 id="题目内容"><a href="#题目内容" class="headerlink" title="题目内容"></a>题目内容</h2><p>Given a string s, find the longest palindromic substring in s. You may assume that the maximum length of s is 1000.</p>
+<p>Example 1:</p>
+<p>Input: “babad”<br>Output: “bab”<br>Note: “aba” is also a valid answer. </p>
+<p>求给定字符串中的最长回文串并返回</p>
+<h2 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h2><p>  找出所有的回文串然后找出最长的回文串返回，但是在判断回文串的过程时候，会出现重复计算的问题，通过分析发现回文串具有最优子<br>结构性质以利用递推的方法判断回文串，遍历所有的回文串时间复杂度为O(n^2)，同时注意在搜索解空间的时候需要，设定一个搜索顺序<br>下面基于两种不同的搜索顺序给出两种不同的方法。</p>
+<h2 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h2><p>方法一：字符串末尾向字符串开始不断移动，从以最后一个字符串为中心一直到以第一个字符串为中心</p>
+<figure class="highlight plain"><figcaption><span>lang=python</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">class Solution:</span><br><span class="line">    def longestPalindrome(self, s: str) -&gt; str:</span><br><span class="line">        length = len(s)</span><br><span class="line">        dp = [[False for j in range(length)]for i in range(length)]</span><br><span class="line">        res=&apos;&apos;</span><br><span class="line">        for i in range(length-1,-1,-1):</span><br><span class="line">            for j in range(i,length):</span><br><span class="line">                #print(j,i)</span><br><span class="line">                dp[i][j] = s[i]==s[j] and (j-i+1&lt;3 or dp[i+1][j-1])</span><br><span class="line">                if dp[i][j] and ( not res or j-i+1&gt;len(res)):</span><br><span class="line">                    res = s[i:j+1]</span><br><span class="line">        return res</span><br><span class="line"> </span><br></pre></td></tr></table></figure>
+<p> 方法二： 从字符串开始进行搜索，并同时判断去掉上题中的判断过程，分为奇数回文串和偶数回文串搜索<br> <figure class="highlight plain"><figcaption><span>lang=python</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">class Solution:</span><br><span class="line">   def longestPalindrome(self, s: str) -&gt; str:</span><br><span class="line">       #减少搜索空间的思路，当以i为中心在扩展第一个时就不为回文串，以i为中心的其他不用判断是否为回文</span><br><span class="line">       length=len(s)</span><br><span class="line">       res=&quot;&quot;</span><br><span class="line">       for i in range(length):</span><br><span class="line">           tmp=self.helper(s,i,i)</span><br><span class="line">           if len(tmp)&gt;len(res):</span><br><span class="line">               res=tmp</span><br><span class="line">           tmp=self.helper(s,i,i+1)</span><br><span class="line">           if len(tmp)&gt;len(res):</span><br><span class="line">               res=tmp</span><br><span class="line">       return res</span><br><span class="line">           </span><br><span class="line">   def helper(self,s,l,r):</span><br><span class="line">       while l&gt;=0 and r&lt;len(s) and s[l]==s[r]:</span><br><span class="line">           l-=1</span><br><span class="line">           r+=1</span><br><span class="line">       return s[l+1:r]</span><br><span class="line">	</span><br></pre></td></tr></table></figure></p>
+</div><hr></div><div class="recent-post-item article-container"><a class="article-title" href="/2019/08/03/transformer/">transformer</a><time class="post-meta__date"><i class="fa fa-calendar" aria-hidden="true"></i> 2019-08-03</time><span class="article-meta"><span class="article-meta__separator">|</span><i class="fa fa-inbox article-meta__icon" aria-hidden="true"></i><a class="article-meta__categories" href="/categories/paper/">paper</a></span><span class="article-meta tags"><span class="article-meta__separator">|</span><i class="fa fa-tag article-meta__icon" aria-hidden="true"></i><a class="article-meta__tags" href="/tags/paper/">paper</a></span><div class="content"><script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=default"></script>
+<h1 id="Attention-is-all-you-need-详解"><a href="#Attention-is-all-you-need-详解" class="headerlink" title="Attention is all you need 详解"></a>Attention is all you need 详解</h1><h2 id="论文提出原因"><a href="#论文提出原因" class="headerlink" title="论文提出原因"></a>论文提出原因</h2><p>1：RNN系列特征提取器</p>
+<p>RNN特征提取器基于语言模型</p>
+<span>$$$p(t_1,t_2,t_3,....,t_n)=\prod_{k=1}^N{p(t_k|t_1,t_2,t_3,.....t_k-1)} $$$</span><!-- Has MathJax -->
+<p>t1,t2,t3,….tn 为一个句子的单词序列，以这种方式提取特征，并行性比较差，因为第k个单词必须在前k-1个单词<br>处理之后才能处理，即使有很多的RNN变体来解决其并行性的问题但是并不能大幅度改变这种并行性，此外这种方式只利用了上文的信息，即使如ELMO里面的操作一样，采取双向进行拼接，但是这种上下文特征进行融合的模式，并不是很理想。</p>
+<p>2：CNN系列特征提取器</p>
+<p>CNN系列特征提取器，因为没有RNN的这种序列关系的影响，特征提取器速度很快，但是随着句子长度的上升，时间复杂度成指数上涨，对于长句子的依赖提取效果非常差。</p>
+<p>因为上述两种特征提取器本省不足，论文提出了基于没有序列操作和卷积操作的Transformer特征提取器，Transformer特征提取器纯基于各个单词注意力机制，他的核心思想就是每一个单词的表示是由其上下文中出现的单词来表示。</p>
+<h2 id="Transformer网络结构"><a href="#Transformer网络结构" class="headerlink" title="Transformer网络结构"></a>Transformer网络结构</h2><p>1: 整体结构</p>
+<p>  整体由6个相同的encoder和6个相同的decoder堆叠而成，其中每一个encoder又与其对应的decoder连接，整体结构如图：<br><img src="https://raw.githubusercontent.com/xiaojianhai/blog_images/master/pictures/transformer/transformer_1.png" alt="avatar"></p>
+<p>2: Encoder</p>
+<p>  其中每个Encoder由Multi-head Attention 然后layernorm（数据分布标准化）+残差网络（处理深层网络的一种方式），然后接一个全连接网络，<br>最后对结果进行分布标准化，残差网络，将结果分别传给上层的decoder和对应的Encoder,Encoder 结构如图：<br><img src="https://raw.githubusercontent.com/xiaojianhai/blog_images/master/pictures/transformer/transformer_2.png" alt="avatar"></p>
+<p>3: Multi-Head Attention and Scaled Dot-product Attention</p>
+<p>  Multi-Head Attention and Scaled Dot-product Attention 如图所示：<br>  <img src="https://raw.githubusercontent.com/xiaojianhai/blog_images/master/pictures/transformer/tranformer_3.png" alt="avatar"><br>  Scaled Dot-product Attention 流程：首先将输入单词进行简单的Embedding 然后嵌入位置，对句子中的每个单词d_word分别乘以三个<br>  矩阵Wq,Wk,Wv,得到三个向量query,key,value,其中Dquery=Dkey,然后利用下面的单词自注意力机制来求每个单词与其上下文之间的联系。<br>  <span>$$$ softmax(\frac{W_{query}^{T}W_{key}}{\sqrt[2]{D_{model}}})*W_{values}$$$</span><!-- Has MathJax --><br>  W_query 为句子中单词的query矩阵，将所具有前后序列性操作的RNN系列替换为各个单词矩阵之间的相乘，给并行性带来了巨大的提高，<br>  同时利用矩阵乘法的优化代码，<br>  同时加快了算法的执行效率。<br>  Multi-Head Attention 公式如下所示：<br>  <span>$$$$ Multi-Head(Q,K,V)=concat(head_1,head_2,head_3,.....,head_h)W^O $$
+$$ where head_i=Attention(QW_i^Q,KW_i^K,VW_i^V) $$$$</span><!-- Has MathJax --><br>    Q,K,V 在输入到注意力机制前需要做一个线性变换，所有参数中的所有Q,K,V矩阵分别乘以不同的矩阵。</p>
+<p>##网络细节<br>1： 编码位置的方法</p>
+<p>  我们的目标是，将最后产生的，word Embedding 是一个与位置具有线性关系的向量，<br>  <span>$$$$ PE(pos,2_i)=\sin(pos/10000^{2_i/d_model})
+  PE(pos,2_i+1)=\cos(pos/10000^{2_i/d_model})
+$$$$</span><!-- Has MathJax --><br>  通过此公式，每个词向量的各个维度的值与pos的值连接起来，并且PEpos+k能被PEpos通过线性表示出来</p>
+<p>2： multi——head策略</p>
+<p>  将每个单词映射到几个不同的子空间，在几个不同的子空间中提取特征，同时，模型的复杂度并没有提高，因为<br>  <span>$$$ D_{query}=\frac{D_{model}}{NUM_HEADERS}  $$$</span><!-- Has MathJax --><br>3：残差网络</p>
+<p>  论文中Transformer中每层Decoderd都采用了残差连接，避免了网络堆叠带来的梯度消失等问题</p>
+<p>##总结<br>  注意力机制策略的核心思想与语言模型类型，每个词的表示都是通过其周围的上下文中的单词来表示，这种直接注意力的方法，让<br>每个单词去直接的与单词进行交互，把位置信息嵌入到embedding中效率很高，同时可以很有效率的利用上文和下文。但是从主观来讲<br>这种嵌入位置信息的方法可能效果不太好，同时因为单词之间采用的是注意力机制，对于句子的处理情况效果也不是很理想。<br>下图是几种，特征提取方式的效率对比图。</p>
+<p><img src="https://raw.githubusercontent.com/xiaojianhai/blog_images/master/pictures/transformer/transformer_4.png" alt="avatar"></p>
+</div><hr></div><div class="recent-post-item article-container"><a class="article-title" href="/2019/08/01/substring/">substring</a><time class="post-meta__date"><i class="fa fa-calendar" aria-hidden="true"></i> 2019-08-01</time><span class="article-meta"><span class="article-meta__separator">|</span><i class="fa fa-inbox article-meta__icon" aria-hidden="true"></i><a class="article-meta__categories" href="/categories/leetcode/">leetcode</a></span><span class="article-meta tags"><span class="article-meta__separator">|</span><i class="fa fa-tag article-meta__icon" aria-hidden="true"></i><a class="article-meta__tags" href="/tags/algorithm/">algorithm</a></span><div class="content"><h1 id="Longest-Palindromic-Substring"><a href="#Longest-Palindromic-Substring" class="headerlink" title="Longest Palindromic Substring"></a><a href="https://leetcode.com/problems/longest-palindromic-substring/" target="_blank" rel="noopener">Longest Palindromic Substring</a></h1><h2 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h2><p>‘’’<br>Given a string s, find the longest palindromic substring in s. You may assume that the maximum length of s is 1000.</p>
+<p>Example 1:</p>
+<p>Input: “babad”<br>Output: “bab”<br>Note: “aba” is also a valid answer.<br>Example 2:</p>
+<p>Input: “cbbd”<br>Output: “bb”<br>‘’’</p>
+<h2 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h2><p>1：暴力法<br>题目是让求最长的字串，首先暴力法，遍历所有解空间找出所有的字串，然后找出最长的子串比较，时间复杂度分析<br>遍历所有的解空间寻找字串时间复杂度是O(N^2),判断是否为回文串时间复杂度是O(N)，比较字串时间复杂度是O(1)</p>
+<p>2:递归法<br>因为是寻找字串的问题，所以当时考虑去用递归去求解，因为这个最长的字串要么在左字串，要么在右字串中，要么<br>横跨左右字串，但是横款左右字串的那种情况不好处理，情况很复杂。</p>
+<p>3：动态规划<br>最长字串问题解题时候，想到了用动态规划，首先去寻找递推公式，长字符串和其子字符串之间的最长回文串之间的<br>关系，但是情况很复杂，没能找到正确的递推公式，同时回文串是比较特殊的子问题，因为每个回文串是需要去验证<br>是否为回文串，所以这种动态规划的方式不可行。但是注意到每个回文串是需要验证其真假，每个字串都需要验证<br>，回文串与子回文串之间可以轻松的推出递推公式：以dp[i]<a href="代表字符串中下标i,到j,的字串">j</a> 为例；当且仅<br>当dp[i+1][j-1] 为回文串并且s[i]=s[j]时才成立。</p>
+<p>代码：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">longestPalindrome</span><span class="params">(self, s)</span>:</span></span><br><span class="line">        <span class="string">"""</span></span><br><span class="line"><span class="string">        :type s: str</span></span><br><span class="line"><span class="string">        :rtype: str</span></span><br><span class="line"><span class="string">        """</span></span><br><span class="line">        length=len(s)</span><br><span class="line">        ans=<span class="string">''</span></span><br><span class="line">        dp=[[<span class="number">0</span> <span class="keyword">if</span> i!=j <span class="keyword">else</span> <span class="number">1</span> <span class="keyword">for</span> j <span class="keyword">in</span> range(length)]<span class="keyword">for</span> i <span class="keyword">in</span> range(length)]</span><br><span class="line">        <span class="keyword">if</span> length==<span class="number">1</span>:</span><br><span class="line">            <span class="keyword">return</span> s</span><br><span class="line">        <span class="comment"># 动态规划的式子中，所有的i，j 是倒序积累的，小的i由大的i计算出</span></span><br><span class="line">        <span class="comment">#所有i的寻找从大到小</span></span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> range(length<span class="number">-1</span>,<span class="number">-1</span>,<span class="number">-1</span>):</span><br><span class="line">            <span class="keyword">for</span> j <span class="keyword">in</span> range(i,length):</span><br><span class="line">                dp[i][j]=(s[i]==s[j] <span class="keyword">and</span> (j-i&lt;<span class="number">3</span> <span class="keyword">or</span> dp[i+<span class="number">1</span>][j<span class="number">-1</span>]))</span><br><span class="line">                <span class="keyword">if</span> dp[i][j] <span class="keyword">and</span> ( <span class="keyword">not</span> ans <span class="keyword">or</span> len(s[i:j+<span class="number">1</span>])&gt;len(ans)):</span><br><span class="line">                    ans=s[i:j+<span class="number">1</span>]</span><br><span class="line">        <span class="keyword">return</span> ans</span><br><span class="line">            </span><br></pre></td></tr></table></figure>
+
+
+</div><hr></div><div class="recent-post-item article-container"><a class="article-title" href="/2019/07/23/nlp-conference/">nlp_conference</a><time class="post-meta__date"><i class="fa fa-calendar" aria-hidden="true"></i> 2019-07-23</time><span class="article-meta"><span class="article-meta__separator">|</span><i class="fa fa-inbox article-meta__icon" aria-hidden="true"></i><a class="article-meta__categories" href="/categories/基础知识/">基础知识</a></span><span class="article-meta tags"><span class="article-meta__separator">|</span><i class="fa fa-tag article-meta__icon" aria-hidden="true"></i><a class="article-meta__tags" href="/tags/NLP/">NLP</a></span><div class="content"><h1 id="NLP学术界"><a href="#NLP学术界" class="headerlink" title="NLP学术界"></a>NLP学术界</h1><h2 id="缩写"><a href="#缩写" class="headerlink" title="缩写"></a>缩写</h2><p>自然语言处理NLP(Natural language processing),计算语言学CL(Computational Linguistics)</p>
+<p>NLP/CL领域最大的国际专业学会ACL(The Association for Computional Linguistics)</p>
+<p>ACL北美分会NAACL(North American Chapter of the ACL)</p>
+<p>ACL欧洲分会（Europen Chapter of the ACL)</p>
+<p>ACL,EACL,NAACL,举办的会议与学会本身名字相同</p>
+<p>ACL下属的兴趣小组；类似总公司下的子公司的概念特殊兴趣小组SIGs(Special interest Groups)</p>
+<p>比较著名的兴趣小组：<br>SIGDAT(Linguistic and Data Corpus-based Approches to NLP)</p>
+<p>SIGNLL(Natrual language Learining)</p>
+<p>SIGDAT举办的会议EMNLP(Conference on Empirical Methonds on Natrual Language Processing)</p>
+<p>SIGNLL举办的会议CoNLL(Conference on Natrual Language learning)</p>
+<p>学术组织ICCL( internation Committe on Computational Linguistics)</p>
+<p>ICCL举办的会议COLING（international conference on computional Linguistics).</p>
+<h2 id="各个组织与会议之间的关系"><a href="#各个组织与会议之间的关系" class="headerlink" title="各个组织与会议之间的关系"></a>各个组织与会议之间的关系</h2><ol>
+<li>学术组织ACL,ACL的北美分会NAACL，ACL的欧洲分会EACL,他们分别举办的会议：</li>
+</ol>
+<p>ACL,NAACL,EACL.</p>
+<p>同时ACL学术组织创办了ACL的会刊Transactions of ACL(TACL)</p>
+<p>ACL学术组织的下属兴趣小组，SIGDAT,SIGNLL,他们分别举办的会议：</p>
+<p>SIGDAT:EMNLP，SIGNLL:CoNLL</p>
+<p>关于ACL的两个重要链接：</p>
+<p><a href="https://aclweb.org/aclwiki/Main_Page" target="_blank" rel="noopener">ACL的wiki页面</a></p>
+<p><a href="https://www.aclweb.org/anthology/" target="_blank" rel="noopener">ACL收录的论文</a></p>
+<ol start="2">
+<li>学术组织ICLL( International Committee on Computational Linguistics),创办的学术会议</li>
+</ol>
+<p>COLING</p>
+<p>总结NLP/CL的高水平成果主要分布在ACL,NAACL,EMNLP,COLING,等几个学术会议</p>
+<h2 id="NLP-CL的一些交叉领域"><a href="#NLP-CL的一些交叉领域" class="headerlink" title="NLP/CL的一些交叉领域"></a>NLP/CL的一些交叉领域</h2><p>人工智能国际联合大会IJCAI(International Joint Conferences on Artifical Intelligence)</p>
+<p>AAAI(Association for the Advancement of the Artifical Intelligence)</p>
+<p>神经信息处理系统大会NIPS(Nerual information Processing Systems)</p>
+<h2 id="论文查阅相关"><a href="#论文查阅相关" class="headerlink" title="论文查阅相关"></a>论文查阅相关</h2><p>arXiv:收集物理学，数学计算机科学的网站</p>
+<p>中国计算机学会（CCF)：制定了中国计算机学会推荐国际学术会议和期刊目录，基本列出了每个领域的高水平期刊与会议。 </p>
+<p>谷歌学术</p>
+<h2 id="论文投递相关"><a href="#论文投递相关" class="headerlink" title="论文投递相关"></a>论文投递相关</h2><p>ACL,EMNLP,NAACL,每年举办一次</p>
+<p>AAAI 每年举办一次</p>
+<p>NIPS 每年举办一次</p>
+<p>COLING 每两年举办一次</p>
+<p>IJCAI 每两年举办一次</p>
+</div><hr></div><div class="recent-post-item article-container"><a class="article-title" href="/2019/07/10/machine-learning-theory/">machine_learning_theory</a><time class="post-meta__date"><i class="fa fa-calendar" aria-hidden="true"></i> 2019-07-10</time><span class="article-meta"><span class="article-meta__separator">|</span><i class="fa fa-inbox article-meta__icon" aria-hidden="true"></i><a class="article-meta__categories" href="/categories/machine-learning/">machine learning</a></span><span class="article-meta tags"><span class="article-meta__separator">|</span><i class="fa fa-tag article-meta__icon" aria-hidden="true"></i><a class="article-meta__tags" href="/tags/theory/">theory</a></span><div class="content"><script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=default"></script>
+
+<h1 id="奥卡姆剃刀原则"><a href="#奥卡姆剃刀原则" class="headerlink" title="奥卡姆剃刀原则"></a>奥卡姆剃刀原则</h1><p>  “Entities should not be multiplied without necessity.”原话来源于维基百科，大意是除非必要不要随意增加实体，更通俗易懂的解释，如果对于同一个现象有两种不同的解释，最有可能正确的解释，即使最简单的解释，即<br>做出最少量假设的解释，在机器学习领域，给定一些训练数据和一个网络架构，有多个模型，多组假设，如果模型的效果差距不大，我们会首先选择假设空间较小的模型，假设空间小意味着网络的参数也更小。</p>
+<p>  具体到机器学习的例子，对于连续抛100次硬币，在网络中参数足够多的情况下，我们完全可以拟合出函数M(X)&gt;=2^100我们完全可以拟合出符合数据分布的模型，但这样的模型并没<br>有学习到数据的呈现规律，没有任何意义。如果我们限制假设空间的大小，限制网络的参数，我们是可以拟合出符合数据分布规律的模型，同样的符合数据分布的模型，假设少的有更<br>大可能符合要求.</p>
+<p>  机器学习领域中，常用奥卡姆剃刀原则来进行过拟合处理，简单模型是一种参数值分布的熵较低的模型（更不容易过拟合），因此要缓解过拟合，需要限制假设空间的大小，即限制<br>网络的复杂性，具体方法是强制权重采用较小的值，是权重值的分布更规则。通过向网络的损失函数添加与权重较大相关的代价实现。</p>
+<blockquote>
+<p>L1权重正则化，添加的代价与权重系统的绝对值成正比。<br>L2正则化，添加的代价与权重系数的平方成正比。<br>权重正则化，通过减少损失函数的值从而减少权重的，让部分权重的值很小或者接近零从而减少网络的复杂性。</p>
+</blockquote>
+<h1 id="天下没有免费的午餐"><a href="#天下没有免费的午餐" class="headerlink" title="天下没有免费的午餐"></a>天下没有免费的午餐</h1><p>  所有学习算法的期望性和随机胡猜差不多，NFL假设所有的问题，所有的机会都相同，但是实际情况不是这样，很多时候我们只关注自己正在试图解决的问题，为其找到合适的解决<br>方案，对于其他问题我们并不关心其好坏，NFL定理最重要的寓意就是脱离具体问题去谈算法的好坏毫无意义，因为考虑所有的潜在问题所有的算法都一样好。</p>
+<h1 id="熵"><a href="#熵" class="headerlink" title="熵"></a>熵</h1><p>  在信息论中，熵（entropy)表示随机变量不确定性的度量，设X是一个取有限个值的离散随机变量，其概率分布为<br>  <span>$$$P(X=x_i)=p_i, i=1,2.....,n$$$</span><!-- Has MathJax --><br>  随机变量X的熵定义为：<br>  <span>$$$H(X)=-\sum_{k=1}^np_ilog p_i$$$</span><!-- Has MathJax --><br>  信息的不确定性越大，则H(X)值越大，熵的值也就越大，所含的信息量也就越大。</p>
+<p>  条件熵H(Y|X)表示在已知随机变量X的条件下随机变量Y的不确定性，随机变量X给定的条件下随机变量Y的条熵<br> （conditional entropy) H(Y|X),定义为X给定条件下，Y的条件概率分布对X的数学期望。<br> <span>$$$H(Y|X)=\sum_{i}^np_iH(Y|X=x_i)$$$</span><!-- Has MathJax --></p>
+ <span>$\\p_i=P(X=x_i）\\,i=1,2......n$</span><!-- Has MathJax -->
+
+<p>  信息增益表示在X确定的情况下，令Y的信息不确定性的下降程度。</p>
+<p>  即：具体到机器学习，在特征A对训练集D的信息增益g(D,A)，定义为集合D的经验熵H(D)与特征A给定条件下D的<br>经验条件熵H(D,A):</p>
+<span>$$$g(D,A)=H(D)-H(D,A)$$$</span><!-- Has MathJax -->
+<p>熵H(Y)与条件熵之间的差H(Y|X)又称作互信息，决策树学习中的信息增益等价于互信息。</p>
+</div><hr></div><div class="recent-post-item article-container"><a class="article-title" href="/2019/06/19/linux1/">linux1</a><time class="post-meta__date"><i class="fa fa-calendar" aria-hidden="true"></i> 2019-06-19</time><span class="article-meta"><span class="article-meta__separator">|</span><i class="fa fa-inbox article-meta__icon" aria-hidden="true"></i><a class="article-meta__categories" href="/categories/Linux/">Linux</a></span><span class="article-meta tags"><span class="article-meta__separator">|</span><i class="fa fa-tag article-meta__icon" aria-hidden="true"></i><a class="article-meta__tags" href="/tags/Linux-命令行/">Linux_命令行</a></span><div class="content"><h1 id="tar命令"><a href="#tar命令" class="headerlink" title="tar命令"></a>tar命令</h1><p>用来解压，打包文件的命令，不能进行压缩操作</p>
+<h2 id="命令格式"><a href="#命令格式" class="headerlink" title="命令格式"></a>命令格式</h2><p>tar[必要参数][选择参数][文件]</p>
+<h2 id="命令功能"><a href="#命令功能" class="headerlink" title="命令功能"></a>命令功能</h2><p>用来压缩和解压文件，tar本身不具有压缩功能，通过调用压缩功能实现。</p>
+<h2 id="必要参数"><a href="#必要参数" class="headerlink" title="必要参数"></a>必要参数</h2><p>-A 新增压缩文件到已存在压缩</p>
+<p>-B 设置区块大小</p>
+<p>-c 建立新的压缩文件</p>
+<p>-x 从压缩文件中提取文件</p>
+<p>-t 显示压缩文件的内容</p>
+<p>-z 支持gzip解压文件</p>
+<p>-j 支持bzip2解压文件</p>
+<p>-v 显示操作过程</p>
+<p>-k 保留原有文件不覆盖</p>
+<p>-W 确认压缩文件正确性</p>
+<h2 id="可选参数"><a href="#可选参数" class="headerlink" title="可选参数"></a>可选参数</h2><p>-b 设置区块数目</p>
+<p>-C 切换到指定目录</p>
+<p>-f 指定压缩文件</p>
+<h2 id="实例"><a href="#实例" class="headerlink" title="实例"></a>实例</h2><p>解压到特定目录</p>
+<p>tar -xzvf .gzip -C target_</p>
+<p>将/etc目录下的文件全部打包成为/tmp/etc.tar</p>
+<p>tar -cvf /tmp/etc.tar /etc</p>
+<p>tar -zcvf /tm[/etc.tar.gz /etc</p>
+<p>备份所有文件并且保存权限</p>
+<p>tar -zcvpf /tmp/etc.tar.gz /etc</p>
+<h1 id="chgrp-chown-chmod"><a href="#chgrp-chown-chmod" class="headerlink" title="chgrp,chown,chmod"></a>chgrp,chown,chmod</h1><h2 id="chgrp"><a href="#chgrp" class="headerlink" title="chgrp"></a>chgrp</h2><p>用来变更文件和目录的群组</p>
+<p>chgrp [选项] [组] [文件或目录]</p>
+<p>命令参数</p>
+<p>-c 当发生改变是输出调试信息</p>
+<p>-f 不显示错误信息</p>
+<p>-R 递归处理</p>
+<p>-v 运行时显示详细的处理信息</p>
+<p>chgrp -R bin test6</p>
+<p>将test6及其子目录下所有文件和目录群组改为bin</p>
+<h2 id="chown"><a href="#chown" class="headerlink" title="chown"></a>chown</h2><p>将指定文件的拥有者改为指定的用户或组，用户可以使用户名或者ID</p>
+<p>chown [选项] [所有者：组] 文件</p>
+<p>命令参数：</p>
+<p>-c 显示更改的部分的信息</p>
+<p>-f force忽略错误的信息</p>
+<p>-h </p>
+<p>-R 递归处理</p>
+<p>-v 显示处理信息</p>
+<p>双短线：</p>
+<p>–help 显示帮助信息</p>
+<p>–version 显示版本信息</p>
+<p>实例：</p>
+<p>将log123的拥有者改为mail,群组改为mail</p>
+<p>chown mail:mail log123</p>
+<h2 id="chmod"><a href="#chmod" class="headerlink" title="chmod"></a>chmod</h2><p>改变文件或目录的权限，当用ls -l 显示文件的详细信息，最左边一列为文件的访问权限</p>
+<p>形式如下:-rw-r-r-共10位</p>
+<p>第一位指定了文件类型，-为文件，d为目录</p>
+<p>2-4, 拥有者的权限</p>
+<p>5-7, 组的权限</p>
+<p>8-10，为其他的权限</p>
+<p>命令格式：</p>
+<p>chomd [选项] mode file</p>
+<p>命令参数：</p>
+<p>-f 错误信息不输出</p>
+<p>-R 递归处理</p>
+<p>-v 显示详细消息</p>
+<p>对象：</p>
+<p>u；文件的拥有者</p>
+<p>g：文件的群组</p>
+<p>o: 其他用户群组</p>
+<p>a: 所有的用户和群组</p>
+<p>权限：<br>r读：4<br>w写：2<br>x执行：1</p>
+<p>实例：</p>
+<p>将所有用户增加可执行权限</p>
+<p>chmod -f a+x log2013</p>
+<p>增加用户执行权限，增加组和其他的写和执行权限</p>
+<p>chmod u+x,go+wx log2013 </p>
+<p>设置为所有用户读写</p>
+<p>chmod 777 log 2013== chmode a+rwx log2012</p>
+</div><hr></div><div class="recent-post-item article-container"><a class="article-title" href="/2019/06/04/array/">array</a><time class="post-meta__date"><i class="fa fa-calendar" aria-hidden="true"></i> 2019-06-04</time><span class="article-meta"><span class="article-meta__separator">|</span><i class="fa fa-inbox article-meta__icon" aria-hidden="true"></i><a class="article-meta__categories" href="/categories/algorithm/">algorithm</a></span><span class="article-meta tags"><span class="article-meta__separator">|</span><i class="fa fa-tag article-meta__icon" aria-hidden="true"></i><a class="article-meta__tags" href="/tags/leetcode/">leetcode</a></span><div class="content"><h1 id="Array-篇"><a href="#Array-篇" class="headerlink" title="Array 篇"></a>Array 篇</h1><h2 id="3Sum"><a href="#3Sum" class="headerlink" title="3Sum"></a>3Sum</h2><h3 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h3><p>Given an array nums of n integers, are there elements a, b, c in nums such that a + b + c = 0? Find all unique triplets in the array which gives the sum of zero.</p>
+<p>在整形的数组中，找出所有不相同的元组包含a,b,c 三个数并且三个数和为0。</p>
+<p>NOTE:答案中所有的元组必须不同</p>
+<p>Example:</p>
+<p>Given array nums = [-1, 0, 1, 2, -1, -4],</p>
+<p>A solution set is:<br>[<br>  [-1, 0, 1],<br>  [-1, -1, 2]<br>]</p>
+<h3 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h3><p>题目属于找出符合一定规则的数的组合，我们首先要做的是寻找一种策略去寻找符合规则的数，因为初始数据是随机分布的，因此我们需要人为去制造一种分布规律，便于我们对数字的寻找。</p>
+<p>首先对原始数组进行排序，依次从数组第一个数为元组第一个数一直到数组倒数第三个数为元组第一个数字，定义两个指针分别指向数组的头尾，然后根据三个数与零的大小不同对指针进行不同的调整策略，当三个数和大于零时说明和过大则右指针左移，相反左指针右移。</p>
+<p>具体代码：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">threeSum</span><span class="params">(self, nums: List[int])</span> -&gt; List[List[int]]:</span></span><br><span class="line">        nums.sort()</span><br><span class="line">        ans=[]</span><br><span class="line">        length=len(nums)</span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> range(length<span class="number">-2</span>):</span><br><span class="line">            <span class="keyword">if</span> nums[i]&gt;<span class="number">0</span>:</span><br><span class="line">                <span class="keyword">return</span> ans</span><br><span class="line">            <span class="keyword">if</span> nums[i]==nums[i<span class="number">-1</span>] <span class="keyword">and</span> i&gt;<span class="number">0</span>:</span><br><span class="line">                <span class="comment">#当相邻的两个数相同则后一个数的解为前一个数解的子集</span></span><br><span class="line">                <span class="keyword">continue</span></span><br><span class="line">            <span class="comment">#利用两个指针策略从左到右，根据不同情况，调节不同的指针移动</span></span><br><span class="line">            l=i+<span class="number">1</span></span><br><span class="line">            r=length<span class="number">-1</span></span><br><span class="line">            <span class="keyword">while</span> l&lt;r:</span><br><span class="line">                <span class="keyword">if</span> nums[i]+nums[l]+nums[r]==<span class="number">0</span>:</span><br><span class="line">                    ans.append([nums[i],nums[l],nums[r]])</span><br><span class="line">                    l+=<span class="number">1</span></span><br><span class="line">                    r-=<span class="number">1</span></span><br><span class="line">                    <span class="keyword">while</span> r&gt;l <span class="keyword">and</span> nums[r+<span class="number">1</span>]==nums[r]:</span><br><span class="line">                        r-=<span class="number">1</span></span><br><span class="line">                    <span class="keyword">while</span> r&gt;l <span class="keyword">and</span> nums[l]==nums[l<span class="number">-1</span>]:</span><br><span class="line">                        l+=<span class="number">1</span></span><br><span class="line">                <span class="keyword">elif</span> nums[i]+nums[l]+nums[r]&gt;<span class="number">0</span>:</span><br><span class="line">                    r-=<span class="number">1</span></span><br><span class="line">                <span class="keyword">else</span>:</span><br><span class="line">                    l+=<span class="number">1</span></span><br><span class="line">        <span class="keyword">return</span> ans</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+
+</div><hr></div><div class="recent-post-item article-container"><a class="article-title" href="/2019/06/04/MLE/">极大释然估计</a><time class="post-meta__date"><i class="fa fa-calendar" aria-hidden="true"></i> 2019-06-04</time><span class="article-meta"><span class="article-meta__separator">|</span><i class="fa fa-inbox article-meta__icon" aria-hidden="true"></i><a class="article-meta__categories" href="/categories/日常积累/">日常积累</a></span><span class="article-meta tags"><span class="article-meta__separator">|</span><i class="fa fa-tag article-meta__icon" aria-hidden="true"></i><a class="article-meta__tags" href="/tags/数学/">数学</a></span><div class="content"><h1 id="极大释然估计"><a href="#极大释然估计" class="headerlink" title="极大释然估计"></a>极大释然估计</h1><h2 id="极大释然估计概念"><a href="#极大释然估计概念" class="headerlink" title="极大释然估计概念"></a>极大释然估计概念</h2><p>在统计学中，maximun likelihood estimation(MLE) 是估计概率模型参数的一种方法。在已知观测的数据的前提下，利用最大化释然函数的方法来确定参数的值。</p>
+<p>例子：假设我们对成年雌性企鹅的高度非常感兴趣，但是我们去测量每个成年雌性企鹅的高度是不可能，所以我们需要根据我们观测到的部分样本去估计全部成年雌性企鹅的高度符合的分布，我们假设企鹅的高度符合正态分布（normallly distributed），现在需要解决的问题是，我们需要根据我们手中企鹅的部分样本数据，以及企鹅高度符合的概率模型来确定企鹅高度分布模型的具体参数，对于本例子，需要我们去估计的参数是正态分布的均值（mean) 和 方差<br>（variance)，我们利用极大释然估计（MLE）将mean以及variance作为估计的参数，通过使观测的数据概率最大化来估计参数具体的值。<br>一句话总结：模型已知，模型参数未知，利用样本数据，来估计参数。</p>
+</div><hr></div><nav id="pagination"><div class="pagination"><span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-chevron-right"></i></a></div></nav></div></div><footer class="footer-bg" style="background-image: url(https://raw.githubusercontent.com/xiaojianhai/blog_images/master/bolg_index/1.jpg)"><div class="layout" id="footer"><div class="copyright">&copy;2018 - 2019 By Xu conglei</div><div class="framework-info"><span>Driven - </span><a href="http://hexo.io"><span>Hexo</span></a><span class="footer-separator">|</span><span>Theme - </span><a href="https://github.com/Molunerfinn/hexo-theme-melody"><span>Melody</span></a></div><div class="footer_custom_text">Hi, welcome to my <a href="https://xiaojianhai.github.io/">blog</a>!</div></div></footer><i class="fa fa-arrow-up" id="go-up" aria-hidden="true"></i><script src="https://cdn.jsdelivr.net/npm/animejs@latest/anime.min.js"></script><script src="https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-animate@latest/velocity.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-ui-pack@latest/velocity.ui.min.js"></script><script src="/js/utils.js?version=1.6.1"></script><script src="/js/fancybox.js?version=1.6.1"></script><script src="/js/sidebar.js?version=1.6.1"></script><script src="/js/copy.js?version=1.6.1"></script><script src="/js/fireworks.js?version=1.6.1"></script><script src="/js/transition.js?version=1.6.1"></script><script src="/js/scroll.js?version=1.6.1"></script><script src="/js/head.js?version=1.6.1"></script><script type="text/x-mathjax-config">MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+    processEscapes: true,
+    skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+  },
+  CommonHTML: {
+    linebreaks: { automatic: true, width: "90% container" }
+  },
+  "HTML-CSS": { 
+    linebreaks: { automatic: true, width: "90% container" }
+  },
+  "SVG": { 
+    linebreaks: { automatic: true, width: "90% container" }
+  }
+});
+</script><script type="text/x-mathjax-config">MathJax.Hub.Queue(function() {
+  var all = MathJax.Hub.getAllJax(), i;
+  for (i=0; i < all.length; i += 1) {
+    all[i].SourceElement().parentNode.className += ' has-jax';
+  }
+});
+</script><script src="https://cdn.jsdelivr.net/npm/mathjax/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.css"><script src="https://cdn.jsdelivr.net/npm/katex-copytex@latest/dist/katex-copytex.min.js"></script><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/katex-copytex@latest/dist/katex-copytex.min.css"><script>if(/Android|webOS|iPhone|iPod|BlackBerry/i.test(navigator.userAgent)) {
+  $('#nav').addClass('is-mobile')
+  $('footer').addClass('is-mobile')
+}</script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config("");
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="custom_mathjax_source">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end --></body></html>
